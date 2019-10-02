@@ -30,7 +30,6 @@ var kira = "My name is Yoshikage Kira. I'm 33 years old. My house is in the nort
     " That is how I deal with society, and I know that is what brings me happiness. Although, if I were to fight I wouldn't lose to anyone.";
 
 var dioList = ["Oh? You're Approaching Me?", "WRYYYYYYYYYYY!!!", "MUDA MUDA MUDA MUDAAAAAAA!!", "ZA WARUDO!", "But it was me, Dio!"];
-
 //Functions for random value
 function getRndmDio() {
     return dioList[Math.floor(Math.random() * dioList.length)];
