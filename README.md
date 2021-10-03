@@ -1,4 +1,4 @@
-# MyDiscordBot
+# JoJo bot
 Yare yare daze... This is my Discord bot that is based of the anime JoJo's Bizarre Adventure. I started this project to toy around with Javascript, but now im trying to make it a legitimate thing.
 
 ## Commands
