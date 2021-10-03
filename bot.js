@@ -24,6 +24,11 @@ var kiraList = ["My name is Yoshikage Kira. I'm 33 years old. My house is in the
 var dioList = ["Oh? You're Approaching Me?", "WRYYYYYYYYYYY!!!", "MUDA MUDA MUDA MUDAAAAAAA!!", "ZA WARUDO!", "But it was me, Dio!", "8 seconds have passed."];
 var jotaroList = ["Yare yare daze...", "ORA ORA ORA ORA ORRRAAAA!!", "Star Platinum! Za Warudo!", "I can't beat the shit out of you without getting closer."];
 
+
+// Music queue
+var musicQueue = [];
+var isPlaying = false;
+
 function createEmbed(user, name, content, image) {
     return new MessageEmbed()
         .setColor("#0099ff")
@@ -35,6 +40,24 @@ function createEmbed(user, name, content, image) {
 
 function getRndmLine(list){
     return list[Math.floor(Math.random() * list.length)]
+}
+
+function playAudio(message, connection) {
+    let stream;
+    if (!isPlaying) {
+        let link = musicQueue.shift();
+        stream = connection.play(ytdl(link, {filter: "audioonly"}));
+        isPlaying = true;
+        stream.on("finish", () => {
+            if (musicQueue.length > 0){
+                playAudio(message, connection);
+            } else {
+                isPlaying = false;
+            }
+        })
+    } else {
+        message.channel.send("Wait you for your turn dumb fuck...");
+    }
 }
 //Bot going online
 bot.on("ready", (evt) => {
@@ -56,12 +79,22 @@ bot.on("message", (message) => {
                 message.channel.send({ embed: createEmbed(message.author, cmd, getRndmLine(jotaroList), "https://i.imgur.com/5jhSZbh.jpeg")});
                 break;
             case 'play':
+                if (cmd[1].includes("www.youtube.com")) {
+                    musicQueue.push(cmd[1]);
+                    let channel = message.member.voice.channel;
+                    channel.join().then((conn) => {
+                        playAudio(message, conn);
+                    })
+                } else {
+                    message.channel.send("Gimme a proper link dumbass!");
+                }
+                break;
+            case 'skip':
+                message.channel.send("Star platinum! Skip this song!");
                 let channel = message.member.voice.channel;
                 channel.join().then((connection) => {
-                    connection.play(ytdl(cmd[1], {filter: "audioonly"}))
-                    .on("end", () => {
-                        connection.disconnect();
-                    });
+                    isPlaying = false;
+                    playAudio(message, connection);
                 })
                 break;
             case 'stop':
