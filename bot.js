@@ -1,15 +1,8 @@
 var Discord = require('discord.io');
-var logger = require('winston');
-var auth = require('./auth.json');
-// Configure logger settings
-logger.remove(logger.transports.Console);
-logger.add(new logger.transports.Console, {
-    colorize: true
-});
-logger.level = 'debug';
+
 // Initialize Discord Bot
 var bot = new Discord.Client({
-    token: auth.token,
+    token: process.env.token,
     autorun: true
 });
 
@@ -32,7 +25,6 @@ var kiraList = ["My name is Yoshikage Kira. I'm 33 years old. My house is in the
 var dioList = ["Oh? You're Approaching Me?", "WRYYYYYYYYYYY!!!", "MUDA MUDA MUDA MUDAAAAAAA!!", "ZA WARUDO!", "But it was me, Dio!", "8 seconds have passed."];
 
 var jotaroList = ["Yare yare daze...", "ORA ORA ORA ORA ORRRAAAA!!", "Star Platinum! ||Za Warudo!||", "I can't beat the shit out of you without gettign closer"];
-
 
 function getRndmLine(list){
     return list[Math.floor(Math.random() * list.length)]
