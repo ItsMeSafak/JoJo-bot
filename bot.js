@@ -103,6 +103,9 @@ bot.on("message", (message) => {
             case 'help':
                 message.channel.send(explanation);
                 break;
+            default:
+                message.channel.send(`What the fuck does '${cmd[0]}' mean?`);
+                break;
         }
     }
 });
