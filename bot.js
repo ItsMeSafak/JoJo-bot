@@ -51,7 +51,7 @@ bot.on("messageCreate", function (message) {
                 message.channel.send({ embeds: [createEmbed(message.author, cmd, getRndmLine(dioList), "https://i.imgur.com/sOKL0w5.png")]});
                 break;
             case 'Jotaro':
-                message.channel.send({ embeds: [createEmbed(message.author, cmd, getRndmLine(jotaroList), "https://i.imgur.com/QNeLwK5b.jpg")]});
+                message.channel.send({ embeds: [createEmbed(message.author, cmd, getRndmLine(jotaroList), "https://i.imgur.com/5jhSZbh.jpeg")]});
                 break;
             case 'help':
                 message.channel.send(explanation);
