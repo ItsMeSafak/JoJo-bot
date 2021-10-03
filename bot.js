@@ -1,13 +1,15 @@
 const { Client, Intents} = require('discord.js');
-const { MessageEmbed } = require('discord.js/src/index.js');
+const { MessageEmbed } = require('discord.js');
+const ytdl = require('ytdl-core');
 const dotenv = require('dotenv');
+
 dotenv.config();
 
 const bot = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]});
 
 //Help List
-var helpCommand = "JoJo";
-var commands = ["`Yoshikage`", "`Dio`", "`Jotaro`"];
+var helpCommand = "jojo";
+var commands = ["`yoshikage`", "`yio`", "`jotaro`"];
 var explanation = "Yare yare.. So you wanna make use of me? Just type in `" + helpCommand + "` followed by a command from below.\n\n" +
     "These are my commands:\n" + commands;
 
@@ -35,23 +37,35 @@ function getRndmLine(list){
     return list[Math.floor(Math.random() * list.length)]
 }
 //Bot going online
-bot.on("ready", function (evt) {
+bot.on("ready", (evt) => {
     console.log('Yare yare daze.. You are connected!');
 });
 
 // //Main switch statement for execution fo commands
-bot.on("messageCreate", function (message) {
+bot.on("message", (message) => {
     if (message.content.substring(0, 4) === helpCommand) {
-        var cmd = message.content.substring(5);
-        switch (cmd) {
-            case 'Yoshikage':
-                message.channel.send({ embeds: [createEmbed(message.author, cmd, getRndmLine(kiraList), "https://i.imgur.com/bZIqHDI.png")]});
+        var cmd = message.content.substring(5).split(' ');
+        switch (cmd[0]) {
+            case 'yoshikage':
+                message.channel.send({ embed: createEmbed(message.author, cmd, getRndmLine(kiraList), "https://i.imgur.com/bZIqHDI.png")});
                 break;
-            case 'Dio':
-                message.channel.send({ embeds: [createEmbed(message.author, cmd, getRndmLine(dioList), "https://i.imgur.com/sOKL0w5.png")]});
+            case 'dio':
+                message.channel.send({ embed: createEmbed(message.author, cmd, getRndmLine(dioList), "https://i.imgur.com/sOKL0w5.png")});
                 break;
-            case 'Jotaro':
-                message.channel.send({ embeds: [createEmbed(message.author, cmd, getRndmLine(jotaroList), "https://i.imgur.com/5jhSZbh.jpeg")]});
+            case 'jotaro':
+                message.channel.send({ embed: createEmbed(message.author, cmd, getRndmLine(jotaroList), "https://i.imgur.com/5jhSZbh.jpeg")});
+                break;
+            case 'play':
+                let channel = message.member.voice.channel;
+                channel.join().then((connection) => {
+                    connection.play(ytdl(cmd[1], {filter: "audioonly"}))
+                    .on("end", () => {
+                        connection.disconnect();
+                    });
+                })
+                break;
+            case 'stop':
+                message.member.voice.channel.leave();
                 break;
             case 'help':
                 message.channel.send(explanation);
