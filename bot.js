@@ -1,5 +1,6 @@
 const { Client, Intents} = require('discord.js');
 const { MessageEmbed } = require('discord.js');
+const { joinVoiceChannel } = require('@discordjs/voice');
 const ytdl = require('ytdl-core');
 const dotenv = require('dotenv');
 
@@ -42,27 +43,28 @@ bot.on("ready", (evt) => {
 });
 
 // //Main switch statement for execution fo commands
-bot.on("message", (message) => {
+bot.on("messageCreate", (message) => {
     if (message.content.substring(0, 4) === helpCommand) {
         var cmd = message.content.substring(5).split(' ');
+        console.log(cmd);
         switch (cmd[0]) {
             case 'yoshikage':
-                message.channel.send({ embed: createEmbed(message.author, cmd, getRndmLine(kiraList), "https://i.imgur.com/bZIqHDI.png")});
+                message.channel.send({ embeds: [createEmbed(message.author, cmd, getRndmLine(kiraList), "https://i.imgur.com/bZIqHDI.png")]});
                 break;
             case 'dio':
-                message.channel.send({ embed: createEmbed(message.author, cmd, getRndmLine(dioList), "https://i.imgur.com/sOKL0w5.png")});
+                message.channel.send({ embeds: [createEmbed(message.author, cmd, getRndmLine(dioList), "https://i.imgur.com/sOKL0w5.png")]});
                 break;
             case 'jotaro':
-                message.channel.send({ embed: createEmbed(message.author, cmd, getRndmLine(jotaroList), "https://i.imgur.com/5jhSZbh.jpeg")});
+                message.channel.send({ embeds: [createEmbed(message.author, cmd, getRndmLine(jotaroList), "https://i.imgur.com/5jhSZbh.jpeg")]});
                 break;
             case 'play':
-                let channel = message.member.voice.channel;
-                channel.join().then((connection) => {
-                    connection.play(ytdl(cmd[1], {filter: "audioonly"}))
-                    .on("end", () => {
-                        connection.disconnect();
-                    });
-                })
+                // let channel = message.member.voice.channel;
+                let connection = joinVoiceChannel({
+                    channelId: message.member.voice.channel.id,
+                    guildId: message.guild.id,
+                    adapterCreator: message.guild.voiceAdapterCreator});
+                console.log(connection);
+                connection.playStream(ytdl(cmd[1], {filter: "audioonly"}));
                 break;
             case 'stop':
                 message.member.voice.channel.leave();
