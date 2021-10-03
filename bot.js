@@ -1,4 +1,5 @@
 const { Client, Intents} = require('discord.js');
+const { MessageEmbed } = require('discord.js/src/index.js');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -21,6 +22,15 @@ var kiraList = ["My name is Yoshikage Kira. I'm 33 years old. My house is in the
 var dioList = ["Oh? You're Approaching Me?", "WRYYYYYYYYYYY!!!", "MUDA MUDA MUDA MUDAAAAAAA!!", "ZA WARUDO!", "But it was me, Dio!", "8 seconds have passed."];
 var jotaroList = ["Yare yare daze...", "ORA ORA ORA ORA ORRRAAAA!!", "Star Platinum! ||Za Warudo!||", "I can't beat the shit out of you without gettign closer"];
 
+function createEmbed(user, name, content, image) {
+    return new MessageEmbed()
+        .setColor("#0099ff")
+        .setTitle(name)
+        .setAuthor(user.username, user.avatarURL(), null)
+        .setDescription(content)
+        .setImage(image);
+}
+
 function getRndmLine(list){
     return list[Math.floor(Math.random() * list.length)]
 }
@@ -35,13 +45,13 @@ bot.on("messageCreate", function (message) {
         var cmd = message.content.substring(5);
         switch (cmd) {
             case 'Yoshikage':
-                message.channel.send(getRndmLine(kiraList));
+                message.channel.send({ embeds: [createEmbed(message.author, cmd, getRndmLine(kiraList), "https://i.imgur.com/bZIqHDI.png")]});
                 break;
             case 'Dio':
-                message.channel.send(getRndmLine(dioList));
+                message.channel.send({ embeds: [createEmbed(message.author, cmd, getRndmLine(dioList), "https://i.imgur.com/sOKL0w5.png")]});
                 break;
             case 'Jotaro':
-                message.channel.send(getRndmLine(jotaroList));
+                message.channel.send({ embeds: [createEmbed(message.author, cmd, getRndmLine(jotaroList), "https://i.imgur.com/QNeLwK5b.jpg")]});
                 break;
             case 'help':
                 message.channel.send(explanation);
