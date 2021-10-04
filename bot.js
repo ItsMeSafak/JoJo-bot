@@ -7,7 +7,7 @@ const DisTube = require('distube');
 dotenv.config();
 
 const bot = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]});
-const distube = new DisTube(bot, { searchSongs: true, emitNewSongOnly: true })
+const distube = new DisTube(bot, { searchSongs: true, emitNewSongOnly: true, leaveOnEmpty: true })
 
 //Help List
 var helpCommand = "jojo";
