@@ -2,10 +2,12 @@ const { Client, Intents} = require('discord.js');
 const { MessageEmbed } = require('discord.js');
 const ytdl = require('ytdl-core');
 const dotenv = require('dotenv');
+const DisTube = require('distube');
 
 dotenv.config();
 
 const bot = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]});
+const distube = new DisTube(bot, { searchSongs: true, emitNewSongOnly: true })
 
 //Help List
 var helpCommand = "jojo";
@@ -78,16 +80,17 @@ bot.on("message", (message) => {
             case 'jotaro':
                 message.channel.send({ embed: createEmbed(message.author, cmd, getRndmLine(jotaroList), "https://i.imgur.com/5jhSZbh.jpeg")});
                 break;
-            case 'play':
-                if (cmd[1].includes("www.youtube.com")) {
-                    musicQueue.push(cmd[1]);
-                    let channel = message.member.voice.channel;
-                    channel.join().then((conn) => {
-                        playAudio(message, conn);
-                    })
-                } else {
-                    message.channel.send("Gimme a proper link dumbass!");
-                }
+            case 'newplay':
+                // if (cmd[1].includes("www.youtube.com")) {
+                //     musicQueue.push(cmd[1]);
+                //     let channel = message.member.voice.channel;
+                //     channel.join().then((conn) => {
+                //         playAudio(message, conn);
+                //     })
+                // } else {
+                //     message.channel.send("Gimme a proper link dumbass!");
+                // }
+                await distube.play(message, cmd[1]);
                 break;
             case 'skip':
                 message.channel.send("Star platinum! Skip this song!");
