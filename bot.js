@@ -44,23 +44,24 @@ function getRndmLine(list){
     return list[Math.floor(Math.random() * list.length)]
 }
 
-function playAudio(message, connection) {
-    let stream;
-    if (!isPlaying) {
-        let link = musicQueue.shift();
-        stream = connection.play(ytdl(link, {filter: "audioonly"}));
-        isPlaying = true;
-        stream.on("finish", () => {
-            if (musicQueue.length > 0){
-                playAudio(message, connection);
-            } else {
-                isPlaying = false;
-            }
-        })
-    } else {
-        message.channel.send("Wait you for your turn dumb fuck...");
-    }
-}
+// function playAudio(message, connection) {
+//     let stream;
+//     if (!isPlaying) {
+//         let link = musicQueue.shift();
+//         stream = connection.play(ytdl(link, {filter: "audioonly"}));
+//         isPlaying = true;
+//         stream.on("finish", () => {
+//             if (musicQueue.length > 0){
+//                 playAudio(message, connection);
+//             } else {
+//                 isPlaying = false;
+//             }
+//         })
+//     } else {
+//         message.channel.send("Wait you for your turn dumb fuck...");
+//     }
+// }
+
 //Bot going online
 bot.on("ready", (evt) => {
     console.log('Yare yare daze.. You are connected!');
@@ -80,25 +81,21 @@ bot.on("message", (message) => {
             case 'jotaro':
                 message.channel.send({ embed: createEmbed(message.author, cmd, getRndmLine(jotaroList), "https://i.imgur.com/5jhSZbh.jpeg")});
                 break;
-            case 'newplay':
-                // if (cmd[1].includes("www.youtube.com")) {
+            case 'play':
+                if (cmd[1].includes("www.youtube.com")) {
+                    distube.play(message, cmd[1]);
                 //     musicQueue.push(cmd[1]);
                 //     let channel = message.member.voice.channel;
                 //     channel.join().then((conn) => {
                 //         playAudio(message, conn);
                 //     })
-                // } else {
-                //     message.channel.send("Gimme a proper link dumbass!");
-                // }
-                await distube.play(message, cmd[1]);
+                } else {
+                    message.channel.send("Gimme a proper link dumbass!");
+                }
                 break;
             case 'skip':
                 message.channel.send("Star platinum! Skip this song!");
-                let channel = message.member.voice.channel;
-                channel.join().then((connection) => {
-                    isPlaying = false;
-                    playAudio(message, connection);
-                })
+                distube.skip(message);
                 break;
             case 'stop':
                 message.member.voice.channel.leave();
