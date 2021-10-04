@@ -1,28 +1,20 @@
 const { createEmbed, getRndmLine } = require("./utils/helpers");
 const constants = require("./utils/constants");
-const { MessageEmbed } = require('discord.js');
 
 module.exports = {
     help: {
         howto: "`help`",
-        decsr: "Literally shows this message",
+        descr: "Literally shows this message",
         run: (cmd, msg) => {
-            console.log('test');
-            // return createEmbed(
-            //     msg.author,
-            //     cmd,
-            //     "Okay it seems that you're too stupid to use me. Let me break it down to you:",
-            //     null,
-                // Object.keys(this).map((key) => {
-                //     return { name: this[key].howto, value: this[key].descr }
-                // })
-            // )
-            const m = new MessageEmbed()
-            .setColor("#0099ff")
-            .setTitle(msg.author)
-            .setAuthor(msg.author, msg.author.avatarURL(), null)
-            .setDescription("test");
-            console.log(m);
+            return msg.channel.send({embed: createEmbed(
+                msg.author,
+                cmd,
+                "Okay it seems that you're too stupid to use me. Let me break it down to you:",
+                null,
+                Object.keys(module.exports).map((key) => {
+                    return { name: module.exports[key].howto, value: module.exports[key].descr }
+                })
+            )});
         }
     },
     char: {
@@ -59,7 +51,7 @@ module.exports = {
     },
     stop: {
         howto: "`stop`",
-        desr: "Disconnect the bot",
+        descr: "Disconnect the bot",
         run: (msg) => {
             return msg.member.voice.channel.leave()
         }

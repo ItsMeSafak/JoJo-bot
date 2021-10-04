@@ -1,10 +1,9 @@
 // Some relevant imports
 const { Client, Intents} = require('discord.js');
-const dotenv = require('dotenv');
 const DisTube = require('distube');
+const dotenv = require('dotenv');
 const constants = require('./utils/constants');
 const commands = require('./commands');
-const { getRndmLine, createEmbed } = require('./utils/helpers');
 
 // Instantiating bot and distube
 dotenv.config();
@@ -22,41 +21,10 @@ bot.on("message", (message) => {
         var cmd = message.content.substring(5).split(' ');
         const test = commands[cmd[0]];
         test.run(cmd, message);
-
-        // switch (cmd[0]) {
-        //     case 'yoshikage':
-        //         message.channel.send({ embed: createEmbed(message.author, cmd, getRndmLine(constants.kiraList), "https://i.imgur.com/bZIqHDI.png")});
-        //         break;
-        //     case 'dio':
-        //         message.channel.send({ embed: createEmbed(message.author, cmd, getRndmLine(constants.dioList), "https://i.imgur.com/sOKL0w5.png")});
-        //         break;
-        //     case 'jotaro':
-        //         message.channel.send({ embed: createEmbed(message.author, cmd, getRndmLine(constants.jotaroList), "https://i.imgur.com/5jhSZbh.jpeg")});
-        //         break;
-        //     case 'play':
-        //         if (cmd[1].includes("www.youtube.com")) {
-        //             distube.play(message, cmd[1]);
-        //         } else {
-        //             message.channel.send("Gimme a proper link dumbass!");
-        //         }
-        //         break;
-        //     case 'skip':
-        //         message.channel.send("Star platinum! Skip this song!");
-        //         if(distube.queue) distube.skip(message);
-        //         break;
-        //     case 'stop':
-        //         message.member.voice.channel.leave();
-        //         break;
-        //     case 'help':
-        //         message.channel.send("Help yourself n00b");
-        //         break;
-        //     default:
-        //         message.channel.send(`What the fuck does '${cmd[0]}' mean?`);
-        //         break;
-        // }
     }
 });
 
+// Disable auto play from yt (fucking autplay cringe)
 distube
     .on("initQueue", (queue) => {
         queue.autoplay = false;

@@ -1,5 +1,3 @@
-const commands = require("../commands");
-
 module.exports = {
     // Commands
     suffix: "jojo",
