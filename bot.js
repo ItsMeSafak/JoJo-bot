@@ -96,7 +96,7 @@ bot.on("message", (message) => {
                 break;
             case 'skip':
                 message.channel.send("Star platinum! Skip this song!");
-                if(distube.queue) distube.skip(message);
+                distube.skip(message);
                 break;
             case 'stop':
                 message.member.voice.channel.leave();
