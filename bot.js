@@ -30,6 +30,7 @@ var jotaroList = ["Yare yare daze...", "ORA ORA ORA ORA ORRRAAAA!!", "Star Plati
 // Music queue
 var musicQueue = [];
 var isPlaying = false;
+var songs = [];
 
 function createEmbed(user, name, content, image) {
     return new MessageEmbed()
@@ -83,6 +84,7 @@ bot.on("message", (message) => {
                 break;
             case 'play':
                 if (cmd[1].includes("www.youtube.com")) {
+                    songs.push(cmd[1]);
                     distube.play(message, cmd[1]);
                 //     musicQueue.push(cmd[1]);
                 //     let channel = message.member.voice.channel;
@@ -95,6 +97,10 @@ bot.on("message", (message) => {
                 break;
             case 'skip':
                 message.channel.send("Star platinum! Skip this song!");
+                if (songs.length <= 0) {
+                    distube.stop(message);
+                    return message.channel.send("There is nothing in the queue right now!");
+                }
                 distube.skip(message);
                 break;
             case 'stop':
@@ -109,5 +115,10 @@ bot.on("message", (message) => {
         }
     }
 });
+
+distube
+    .on("playSong", (message, queue, song) => {
+        songs.shift();
+    });
 
 bot.login(process.env.DISCORD_KEY);
