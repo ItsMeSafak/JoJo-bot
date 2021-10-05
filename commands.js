@@ -1,4 +1,3 @@
-const DisTube = require('distube');
 const { createEmbed, getRndmLine } = require("./utils/helpers");
 const constants = require("./utils/constants");
 
@@ -32,8 +31,8 @@ module.exports = {
     play: {
         howto: "`play <yt url>`",
         descr: "Play some music with the given url from YouTube",
-        run: (params) => {
-                return params.distube.play(params.msg, params.cmd[1]);
+        run: async (params) => {
+                return await params.distube.play(params.msg, params.cmd[1]);
             }
     },
     skip: {
@@ -48,7 +47,7 @@ module.exports = {
         howto: "`stop`",
         descr: "Disconnect the bot",
         run: (params) => {
-            return params.msg.member.voice.channel.leave()
+            return params.distube.stop(params.msg);
         }
     }
 }
