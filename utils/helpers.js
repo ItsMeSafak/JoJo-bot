@@ -1,15 +1,13 @@
 const { MessageEmbed } = require('discord.js');
 
 module.exports = {
-    createEmbed(user, name, content, image = null, fields) {
-        console.log(fields);
+    createEmbed(params) {
         return new MessageEmbed()
             .setColor("#0099ff")
-            .setTitle(name)
-            .setAuthor(user.username, user.avatarURL(), null)
-            .setDescription(content)
-            .addFields(fields)
-            .setImage(image);
+            .setTitle(params.title)
+            .setAuthor(params.user.username, params.user.avatarURL(), null)
+            .setDescription(params.content)
+            .setImage(params.image);
     },
 
     getRndmLine(list){
