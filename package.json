@@ -10,8 +10,9 @@
   "dependencies": {
     "@discordjs/opus": "^0.5.3",
     "@discordjs/voice": "^0.6.0",
+    "@distube/spotify": "^0.6.4",
     "discord.js": "^12.5.3",
-    "distube": "^2.8.18",
+    "distube": "^3.0.0-beta.39",
     "dotenv": "^10.0.0",
     "ffmpeg-static": "^4.4.0",
     "giphy-js-sdk-core": "^1.0.6",
