@@ -9,4 +9,4 @@ The JoJo bot currently has the following commands:
 
 ![Jotaro](https://media.giphy.com/media/f9jxYYRVPHtKsCf9sy/giphy.gif)
 
-*Happy coding 😄!*
+*Now you are ready to go! Happy coding 😄!*
