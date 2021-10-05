@@ -6,3 +6,7 @@ The JoJo bot currently has the following commands:
 - **Yoshikage/Dio/Jotaro**: Sends an embedded message with a random line of the given character.
 - **play**: Plays a video from youtube as audio only.
 - **stop**: Leaves the voice channel.
+
+![Jotaro](https://media.giphy.com/media/f9jxYYRVPHtKsCf9sy/giphy.gif)
+
+*Happy coding 😄!*
