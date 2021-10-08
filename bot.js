@@ -15,7 +15,6 @@ const distube = new DisTube(bot, {
     searchSongs: 1,
     emitNewSongOnly: true, 
     leaveOnEmpty: true, 
-    leaveOnFinish: true,
     plugins: [new SpotifyPlugin()]
  })
 
@@ -28,10 +27,14 @@ bot.on("ready", () => {
 bot.on("message", async (message) => {
     if (message.content.substring(0, constants.suffix.length) === constants.suffix) {
         let listOfCommand = message.content.substring(constants.suffix.length + 1).split(" ");
-        message.delete()
+        message.delete();
         var cmd = [listOfCommand.shift(), listOfCommand.join()];
         const executingCommand = commands[cmd[0]];
-        await executingCommand.run({distube: distube, cmd: cmd, msg: message});
+        if (executingCommand) {
+            await executingCommand.run({distube: distube, cmd: cmd, msg: message});
+        } else {
+            message.channel.send(`What the fuck does ${cmd[0]} mean?`)
+        }
     }
 });
 
