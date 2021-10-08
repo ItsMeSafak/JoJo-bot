@@ -39,8 +39,12 @@ module.exports = {
         howto: "`skip`",
         descr: "Skip the current song",
         run: async (params) => {
-            params.msg.channel.send("Star platinum! Skip this song!");
-            return await params.distube.skip(params.msg);
+            try {
+                params.msg.channel.send("Star platinum! Skip this song!");
+                return await params.distube.skip(params.msg);
+            } catch (error) {
+                params.msg.channel.send("There is nothing to skip dumb fuck!");
+            }
         }
     },
     stop: {
