@@ -11,8 +11,7 @@ const momentjs = require('moment');
 // Instantiating bot and distube
 dotenv.config();
 const bot = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES]});
-const distube = new DisTube(bot, { 
-    searchSongs: 1,
+const distube = new DisTube(bot, {
     emitNewSongOnly: true, 
     leaveOnEmpty: true, 
     youtubeDL: true,
