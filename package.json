@@ -17,6 +17,7 @@
     "ffmpeg-static": "^4.4.0",
     "giphy-js-sdk-core": "^1.0.6",
     "libsodium-wrappers": "^0.7.9",
+    "moment": "^2.29.1",
     "ytdl-core": "^4.9.1"
   },
   "engines": {

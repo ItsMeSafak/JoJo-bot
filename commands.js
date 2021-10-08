@@ -24,16 +24,16 @@ module.exports = {
                     createEmbed({
                         user: params.msg.author, 
                         title: params.cmd[1], 
-                        content: getRndmLine(constants[params.cmd[1]]), 
-                        image: "https://i.imgur.com/bZIqHDI.png"})});
+                        content: getRndmLine(constants[params.cmd[1]])
+                    })});
         }
     },
     play: {
         howto: "`play <yt url>`",
         descr: "Play some music with the given url from YouTube",
         run: async (params) => {
-                return await params.distube.play(params.msg, params.cmd[1]);
-            }
+            return await params.distube.play(params.msg, params.cmd[1]);
+        }
     },
     skip: {
         howto: "`skip`",

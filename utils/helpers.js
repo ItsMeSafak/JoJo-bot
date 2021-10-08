@@ -7,7 +7,6 @@ module.exports = {
             .setTitle(params.title)
             .setAuthor(params.user.username, params.user.avatarURL(), null)
             .setDescription(params.content)
-            .setImage(params.image);
     },
 
     getRndmLine(list){
