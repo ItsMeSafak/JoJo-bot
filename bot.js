@@ -15,6 +15,8 @@ const distube = new DisTube(bot, {
     searchSongs: 1,
     emitNewSongOnly: true, 
     leaveOnEmpty: true, 
+    youtubeDL: true,
+    updateYouTubeDL: true,
     plugins: [new SpotifyPlugin()]
  })
 
