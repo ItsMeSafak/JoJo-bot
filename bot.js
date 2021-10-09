@@ -14,8 +14,6 @@ const bot = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MES
 const distube = new DisTube(bot, {
     emitNewSongOnly: true, 
     leaveOnEmpty: true, 
-    youtubeDL: true,
-    updateYouTubeDL: true,
     plugins: [new SpotifyPlugin()]
  })
 
