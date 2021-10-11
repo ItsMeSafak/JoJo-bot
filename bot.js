@@ -47,7 +47,7 @@ distube
         let queueList = '';
         let timeUntil = 0;
         queue.songs.forEach((currSong, i) => {
-            queueList += (i == 0 ? '**Now playing: **' : `*${i}. `) + currSong.name + '*\n';
+            queueList += (i == 0 ? '**Now playing: **' : `*${i}. `) + currSong.name + '\n';
             timeUntil += i != 0 ? currSong.duration : 0;
         })
         queue.textChannel.send({
@@ -62,7 +62,7 @@ distube
             })
     })
     .on("playSong", (queue, song) => {
-        queue.textChannel.send(`*NOW PLAYING: * ${song.name}`)
+        queue.textChannel.send(```*NOW PLAYING: * ${song.name}```)
     })
 
 bot.login(process.env.DISCORD_KEY);
