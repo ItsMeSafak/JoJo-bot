@@ -19,7 +19,7 @@ module.exports = {
         howto: "`char <dio, yoshikage, jotaro>`",
         descr: "Prints a random line of the given character",
         run: (params) => {
-            return params.msg.channel.send({
+            return params.msg.textChannel.send({
                 embed: 
                     createEmbed({
                         user: params.msg.author, 
@@ -32,19 +32,16 @@ module.exports = {
         howto: "`play <yt url>`",
         descr: "Play some music with the given url from YouTube",
         run: async (params) => {
-            return params.distube.play(params.msg, params.cmd[1]);
+            return params.distube
+                .play(params.msg, params.cmd[1]);
         }
     },
     skip: {
         howto: "`skip`",
         descr: "Skip the current song",
         run: async (params) => {
-            try {
-                params.msg.channel.send("Star platinum! Skip this song!");
-                return params.distube.skip(params.msg);
-            } catch (error) {
-                params.msg.channel.send("There is nothing to skip dumb fuck!");
-            }
+            params.msg.channel.send("Star platinum! Skip this song!");
+            return params.distube.skip(params.msg);
         }
     },
     stop: {

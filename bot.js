@@ -12,7 +12,6 @@ const momentjs = require('moment');
 dotenv.config();
 const bot = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES]});
 const distube = new DisTube(bot, {
-    searchSongs: 2,
     emitNewSongOnly: true, 
     leaveOnEmpty: true, 
     plugins: [new SpotifyPlugin()]
@@ -27,14 +26,18 @@ bot.on("ready", () => {
 bot.on("message", async (message) => {
     if (message.content.substring(0, constants.suffix.length) === constants.suffix) {
         let listOfCommand = message.content.substring(constants.suffix.length + 1).split(" ");
-        message.delete();
         var cmd = [listOfCommand.shift(), listOfCommand.join()];
         const executingCommand = commands[cmd[0]];
         if (executingCommand) {
-            await executingCommand.run({distube: distube, cmd: cmd, msg: message});
+            await executingCommand.run({distube: distube, cmd: cmd, msg: message})
+                    .catch((e) => {
+                        console.log("get fucked kid");
+                        return distube.stop(message);
+                    });
         } else {
             message.channel.send(`What the fuck does ${cmd[0]} mean?`)
         }
+        message.delete();
     }
 });
 
@@ -62,7 +65,14 @@ distube
             })
     })
     .on("playSong", (queue, song) => {
-        queue.textChannel.send(```*NOW PLAYING: * ${song.name}```)
+        queue.textChannel.send({
+            embed:
+                createEmbed({
+                    user: song.user,
+                    title: 'Now playing',
+                    content: song.name
+                })   
+        });
     })
 
 bot.login(process.env.DISCORD_KEY);
