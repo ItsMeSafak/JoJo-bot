@@ -12,6 +12,7 @@ const momentjs = require('moment');
 dotenv.config();
 const bot = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES]});
 const distube = new DisTube(bot, {
+    searchSongs: 2,
     emitNewSongOnly: true, 
     leaveOnEmpty: true, 
     plugins: [new SpotifyPlugin()]
@@ -61,15 +62,7 @@ distube
             })
     })
     .on("playSong", (queue, song) => {
-        queue.textChannel.send({
-            embed: 
-                createEmbed({
-                    user: song.user,
-                    title: 'Now playing',
-                    content: song.name
-                })
-                .setThumbnail(song.thumbnail)
-            })
+        queue.textChannel.send(`*NOW PLAYING: * ${song.name}`)
     })
 
 bot.login(process.env.DISCORD_KEY);

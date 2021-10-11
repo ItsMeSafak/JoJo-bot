@@ -32,7 +32,7 @@ module.exports = {
         howto: "`play <yt url>`",
         descr: "Play some music with the given url from YouTube",
         run: async (params) => {
-            return await params.distube.play(params.msg, params.cmd[1]);
+            return params.distube.play(params.msg, params.cmd[1]);
         }
     },
     skip: {
@@ -41,7 +41,7 @@ module.exports = {
         run: async (params) => {
             try {
                 params.msg.channel.send("Star platinum! Skip this song!");
-                return await params.distube.skip(params.msg);
+                return params.distube.skip(params.msg);
             } catch (error) {
                 params.msg.channel.send("There is nothing to skip dumb fuck!");
             }
